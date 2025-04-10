@@ -168,6 +168,19 @@ def index():
         logging.error(f"Error processing request: {e}")
         return render_template('index.html', texts=texts, pdf_path=None, error=texts['processing_error'])
 
+# Définition du décorateur after_request en dehors de toute fonction de route
+@app.after_request
+def after_request_func(response):
+    return response
+
+# Fonction pour supprimer un fichier
+def remove_file(filepath):
+    try:
+        if filepath and os.path.exists(filepath):
+            os.remove(filepath)
+    except Exception as e:
+        logging.error(f"Error removing file: {e}")
+
 @app.route('/download')
 def download():
     pdf_path = session.get('pdf_path')
@@ -176,15 +189,15 @@ def download():
     
     filename = session.get('pdf_filename', 'converted.pdf')
     
-    @app.after_request
-    def remove_file(response):
-        try:
-            os.remove(pdf_path)
-        except:
-            pass
-        return response
+    # Planifier la suppression du fichier après la requête
+    response = send_file(pdf_path, as_attachment=True, download_name=filename)
     
-    return send_file(pdf_path, as_attachment=True, download_name=filename)
+    # Supprimer le fichier une fois la réponse envoyée
+    @response.call_on_close
+    def on_close():
+        remove_file(pdf_path)
+    
+    return response
 
 @app.route('/switch-language')
 def switch_language():
