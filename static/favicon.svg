@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="32" height="32">
+  <!-- Background -->
+  <rect x="5" y="5" width="90" height="90" rx="10" ry="10" fill="#3498db" />
+  
+  <!-- PDF text -->
+  <text x="50" y="60" font-family="Arial, sans-serif" font-size="40" text-anchor="middle" fill="#ffffff" font-weight="bold">PDF</text>
+  
+  <!-- Yellow banner at bottom -->
+  <rect x="5" y="75" width="90" height="20" fill="#f1c40f" />
+  
+  <!-- Image icon -->
+  <rect x="15" y="15" width="30" height="25" fill="#ffffff" rx="3" ry="3" />
+  <circle cx="25" cy="25" r="5" fill="#3498db" />
+  <polyline points="35,30 45,20 50,25 55,15" stroke="#ffffff" stroke-width="2" fill="none" />
+  
+  <!-- Arrow -->
+  <path d="M55,40 L65,40 L65,35 L75,45 L65,55 L65,50 L55,50 Z" fill="#ffffff" />
+</svg>

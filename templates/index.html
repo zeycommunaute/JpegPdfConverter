@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="{{ 'fr' if session.get('lang') == 'fr' else 'en' }}" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ texts.title }}</title>
+    <!-- Bootstrap CSS (Replit-themed) -->
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+</head>
+<body>
+    <div class="container py-4">
+        <header class="mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">{{ texts.title }}</h1>
+                <a href="{{ url_for('switch_language') }}" class="btn btn-outline-secondary">
+                    {{ texts.lang_switch }}
+                </a>
+            </div>
+            <hr>
+        </header>
+
+        <main>
+            <!-- Ad Space at the top -->
+            <div class="ad-container mb-4">
+                <div class="ad-placeholder">
+                    <p>{{ texts.ad_space }}</p>
+                </div>
+            </div>
+
+            <!-- Alert for errors -->
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+            <!-- Alert for success -->
+            {% if pdf_path %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ texts.success }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-7">
+                    <!-- Upload Form -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-upload me-2"></i>{{ texts.upload_btn }}
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="file" name="file" accept=".jpg,.jpeg">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-file-pdf me-2"></i>{{ texts.convert_btn }}
+                                        </button>
+                                    </div>
+                                    <div class="form-text">
+                                        <i class="fas fa-info-circle me-1"></i>*.jpg, *.jpeg
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <!-- Download Card (only shown when PDF is generated) -->
+                    {% if pdf_path %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-download me-2"></i>{{ texts.download_btn }}
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="card-text">
+                                <i class="fas fa-file-pdf fs-1 text-danger mb-3"></i>
+                            </p>
+                            <a href="{{ url_for('download') }}" class="btn btn-success">
+                                <i class="fas fa-download me-2"></i>{{ texts.download_btn }}
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Process Visualization -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-info-circle me-2"></i>{{ 'Comment ça marche' if session.get('lang') == 'fr' else 'How it works' }}
+                </div>
+                <div class="card-body">
+                    <div class="process-steps">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="process-step">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-upload"></i>
+                                    </div>
+                                    <p>{{ 'Téléchargez une image JPEG' if session.get('lang') == 'fr' else 'Upload a JPEG image' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="process-step">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                    <p>{{ 'Ajout d\'une bannière jaune' if session.get('lang') == 'fr' else 'Yellow banner is added' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="process-step">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <p>{{ 'Téléchargez le PDF résultant' if session.get('lang') == 'fr' else 'Download the resulting PDF' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ad Space at the bottom -->
+            <div class="ad-container">
+                <div class="ad-placeholder">
+                    <p>{{ texts.ad_space }}</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="mt-4">
+            <hr>
+            <p class="text-center text-muted">
+                © 2023 {{ texts.title }}
+            </p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
