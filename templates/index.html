@@ -28,26 +28,20 @@
         </header>
 
         <main>
-            <!-- Ad Zones -->
-            <div id="ad-zone-1" class="ad-container mb-4">
-                <div class="ad-placeholder">
-                    <p>Zone 1 - Robust Anti-AdBlock</p>
-                </div>
-            </div>
-            <div id="ad-zone-2" class="ad-container mb-4">
-                <div class="ad-placeholder">
-                    <p>Zone 2 - Robust Standard</p>
-                </div>
-            </div>
-            <div id="ad-zone-3" class="ad-container mb-4">
-                <div class="ad-placeholder">
-                    <p>Zone 3 - Glad Anti-AdBlock</p>
-                </div>
-            </div>
-            <div id="ad-zone-4" class="ad-container mb-4">
-                <div class="ad-placeholder">
-                    <p>Zone 4 - Glad Standard</p>
-                </div>
+            <!-- Conversion Buttons -->
+            <div class="conversion-buttons mb-4">
+                <button class="btn btn-lg btn-primary conversion-btn mb-3">
+                    <i class="fas fa-file-pdf me-2"></i>Convertir JPEG en PDF Gratuit
+                </button>
+                <button class="btn btn-lg btn-success conversion-btn mb-3">
+                    <i class="fas fa-download me-2"></i>Télécharger votre PDF
+                </button>
+                <button class="btn btn-lg btn-info conversion-btn mb-3">
+                    <i class="fas fa-sync me-2"></i>Convertisseur PDF Rapide
+                </button>
+                <button class="btn btn-lg btn-warning conversion-btn mb-3">
+                    <i class="fas fa-magic me-2"></i>Conversion PDF Premium
+                </button>
             </div>
 
             <!-- Alert for errors -->
@@ -182,6 +176,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- MonetTag -->
+    <script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://publishers.monetag.com/tag.min.js',9198076,document.body||document.documentElement)</script>
     <!-- Monetag Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
