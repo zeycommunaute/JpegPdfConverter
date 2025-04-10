@@ -1,5 +1,6 @@
 {pkgs}: {
   deps = [
+    pkgs.nano
     pkgs.iproute2
     pkgs.zlib
     pkgs.tk
