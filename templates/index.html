@@ -16,8 +16,28 @@
     <!-- Favicon -->
     <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
 </head>
-<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9198076,document.body||document.documentElement)</script>
-<script src="https://grookilteepsou.net/act/files/tag.min.js?z=9198018" data-cfasync="false" async></script>
+<script>
+window.addEventListener('load', function() {
+    // MonetTag
+    (function(s,u,z,p){
+        s.src=u;
+        s.setAttribute('data-zone',z);
+        s.setAttribute('data-domain-script', 'true');
+        p.appendChild(s);
+    })(document.createElement('script'),'https://publishers.monetag.com/tag.min.js',9198076,document.body||document.documentElement);
+    
+    // Configuration spécifique pour Firefox
+    if(navigator.userAgent.indexOf("Firefox") != -1) {
+        document.addEventListener('click', function() {
+            window.monetagPush = window.monetagPush || [];
+            window.monetagPush.push({
+                allowPopunder: true,
+                allowPopup: true
+            });
+        });
+    }
+});
+</script>
 <body>
     <div class="container py-4">
         <header class="mb-4">
