@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="{{ 'fr' if session.get('lang') == 'fr' else 'en' }}" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convertisseur JPEG en PDF gratuit en ligne. Transformez facilement vos images JPEG en fichiers PDF.">
+    <meta name="keywords" content="convertisseur jpeg pdf, conversion image pdf, convertisseur image gratuit">
+    <meta name="robots" content="index, follow">
+    <title>{{ texts.title }} - Convertisseur JPEG en PDF Gratuit</title>
+
+    <!-- Bootstrap CSS (Replit-themed) -->
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+
+    <!-- Monetag Script (zone 9198076) -->
+    <script>
+      (function(s,u,z,p){
+        s.src = u;
+        s.setAttribute('data-zone', '9198076');
+        s.setAttribute('data-cfasync', 'false');
+        s.async = true;
+        p.appendChild(s);
+      })(document.createElement('script'), 'https://shebudrifatier.net/1e/3c/5b/1e3c5b54359bde4dc67c56e9bcb8c584.js', document.body || document.documentElement);
+    </script>
+</head>
+
+<body>
+    <div class="container py-4">
+        <header class="mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">{{ texts.title }}</h1>
+                <a href="{{ url_for('switch_language') }}" class="btn btn-outline-secondary">
+                    {{ texts.lang_switch }}
+                </a>
+            </div>
+            <hr>
+        </header>
+
+        <main>
+            <div class="conversion-buttons mb-4">
+                <button class="btn btn-lg btn-primary conversion-btn mb-3">
+                    <i class="fas fa-file-pdf me-2"></i>Convertir JPEG en PDF Gratuit
+                </button>
+                <button class="btn btn-lg btn-success conversion-btn mb-3">
+                    <i class="fas fa-download me-2"></i>Télécharger votre PDF
+                </button>
+                <button class="btn btn-lg btn-info conversion-btn mb-3">
+                    <i class="fas fa-sync me-2"></i>Convertisseur PDF Rapide
+                </button>
+                <button class="btn btn-lg btn-warning conversion-btn mb-3">
+                    <i class="fas fa-magic me-2"></i>Conversion PDF Premium
+                </button>
+            </div>
+
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+            {% if pdf_path %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ texts.success }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-7">
+                    <!-- Pre-conversion Ad -->
+                    <div class="ad-container mb-4">
+                        <div class="ad-placeholder">
+                            <p>Pre-conversion Ad</p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-upload me-2"></i>{{ texts.upload_btn }}
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" name="file" accept=".jpg,.jpeg">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-file-pdf me-2"></i>{{ texts.convert_btn }}
+                                        </button>
+                                    </div>
+                                    <div class="form-text">
+                                        <i class="fas fa-info-circle me-1"></i>*.jpg, *.jpeg
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    {% if pdf_path %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-download me-2"></i>{{ texts.download_btn }}
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="card-text">
+                                <i class="fas fa-file-pdf fs-1 text-danger mb-3"></i>
+                            </p>
+                            <a href="{{ url_for('download') }}" class="btn btn-success">
+                                <i class="fas fa-download me-2"></i>{{ texts.download_btn }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Post-conversion Ad -->
+                    <div class="ad-container mb-4">
+                        <div class="ad-placeholder">
+                            <p>Post-conversion Ad</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-info-circle me-2"></i>{{ 'Comment ça marche' if session.get('lang') == 'fr' else 'How it works' }}
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <i class="fas fa-upload fa-2x mb-2"></i>
+                            <p>{{ 'Téléchargez une image JPEG' if session.get('lang') == 'fr' else 'Upload a JPEG image' }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="fas fa-image fa-2x mb-2"></i>
+                            <p>{{ 'Ajout d\'une bannière jaune' if session.get('lang') == 'fr' else 'Yellow banner is added' }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <i class="fas fa-file-pdf fa-2x mb-2"></i>
+                            <p>{{ 'Téléchargez le PDF résultant' if session.get('lang') == 'fr' else 'Download the resulting PDF' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ad-container">
+                <div class="ad-placeholder">
+                    <p>{{ texts.ad_space }}</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="mt-4">
+            <hr>
+            <p class="text-center text-muted">© 2025 {{ texts.title }}</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- Service Worker for Monetag -->
+    <script>
+      if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/sw.js')
+              .then(function(registration) {
+                  console.log('Service worker registration succeeded:', registration);
+              }).catch(function(error) {
+                  console.log('Service worker registration failed:', error);
+              });
+      }
+    </script>
+</body>
+</html>
