@@ -105,13 +105,16 @@ def create_pdf(image_data):
             os.remove(temp_image_path)
         return None
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
     lang = get_language()
     texts = LANGUAGES[lang]
+    return render_template('index.html', texts=texts, pdf_path=None, error=None)
 
-    if request.method == 'GET':
-        return render_template('index.html', texts=texts, pdf_path=None, error=None)
+@app.route('/convert', methods=['POST'])
+def convert():
+    lang = get_language()
+    texts = LANGUAGES[lang]
 
     if 'file' not in request.files:
         return render_template('index.html', texts=texts, pdf_path=None, error="No file part")

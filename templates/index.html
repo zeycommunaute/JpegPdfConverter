@@ -39,7 +39,7 @@
     <p>{{ texts.subtitle }}</p>
 
     <!-- Bouton d'upload -->
-    <form method="post" enctype="multipart/form-data" action="/convert" class="mt-4">
+    <form method="post" enctype="multipart/form-data" action="{{ url_for('convert') }}" class="mt-4">
       <div class="mb-3">
         <input type="file" class="form-control" name="file" accept=".jpeg,.jpg" required>
       </div>
