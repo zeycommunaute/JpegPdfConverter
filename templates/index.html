@@ -47,9 +47,16 @@
     </form>
     
     <!-- Résultat de la conversion -->
-    {% if pdf_ready %}
+    {% if pdf_path %}
     <div class="alert alert-success mt-4">
-      <a href="{{ url_for('download_pdf', filename=pdf_filename) }}" class="btn btn-success">Télécharger votre PDF</a>
+      <p>{{ texts.success }}</p>
+      <a href="{{ url_for('download') }}" class="btn btn-success">{{ texts.download_btn }}</a>
+    </div>
+    {% endif %}
+    
+    {% if error %}
+    <div class="alert alert-danger mt-4">
+      {{ error }}
     </div>
     {% endif %}
   </div>
