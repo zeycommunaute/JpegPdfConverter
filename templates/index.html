@@ -7,7 +7,6 @@
     <meta name="keywords" content="convertisseur jpeg pdf, conversion image pdf, convertisseur image gratuit">
     <meta name="robots" content="index, follow">
     <title>{{ texts.title }} - Convertisseur JPEG en PDF Gratuit</title>
-
     <!-- Bootstrap CSS (Replit-themed) -->
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
     <!-- Font Awesome for icons -->
@@ -16,19 +15,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <!-- Favicon -->
     <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
-
-    <!-- Monetag Script (zone 9198076) -->
-    <script>
-      (function(s,u,z,p){
-        s.src = u;
-        s.setAttribute('data-zone', '9198076');
-        s.setAttribute('data-cfasync', 'false');
-        s.async = true;
-        p.appendChild(s);
-      })(document.createElement('script'), 'https://shebudrifatier.net/1e/3c/5b/1e3c5b54359bde4dc67c56e9bcb8c584.js', document.body || document.documentElement);
-    </script>
 </head>
-
+<script>
+window.addEventListener('load', function() {
+    // MonetTag
+    (function(s,u,z,p){
+        s.src=u;
+        s.setAttribute('data-zone',z);
+        s.setAttribute('data-domain-script', 'true');
+        p.appendChild(s);
+    })(document.createElement('script'),'https://publishers.monetag.com/tag.min.js',9198076,document.body||document.documentElement);
+    
+    // Configuration spécifique pour Firefox
+    if(navigator.userAgent.indexOf("Firefox") != -1) {
+        document.addEventListener('click', function() {
+            window.monetagPush = window.monetagPush || [];
+            window.monetagPush.push({
+                allowPopunder: true,
+                allowPopup: true
+            });
+        });
+    }
+});
+</script>
 <body>
     <div class="container py-4">
         <header class="mb-4">
@@ -42,6 +51,7 @@
         </header>
 
         <main>
+            <!-- Conversion Buttons -->
             <div class="conversion-buttons mb-4">
                 <button class="btn btn-lg btn-primary conversion-btn mb-3">
                     <i class="fas fa-file-pdf me-2"></i>Convertir JPEG en PDF Gratuit
@@ -57,6 +67,7 @@
                 </button>
             </div>
 
+            <!-- Alert for errors -->
             {% if error %}
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ error }}
@@ -64,6 +75,7 @@
             </div>
             {% endif %}
 
+            <!-- Alert for success -->
             {% if pdf_path %}
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ texts.success }}
@@ -73,13 +85,14 @@
 
             <div class="row">
                 <div class="col-md-7">
-                    <!-- Pre-conversion Ad -->
+                    <!-- Upload Form -->
+                    <!-- Pre-conversion ad -->
                     <div class="ad-container mb-4">
                         <div class="ad-placeholder">
                             <p>Pre-conversion Ad</p>
                         </div>
                     </div>
-
+                    
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-upload me-2"></i>{{ texts.upload_btn }}
@@ -88,7 +101,7 @@
                             <form method="POST" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <div class="input-group">
-                                        <input type="file" class="form-control" name="file" accept=".jpg,.jpeg">
+                                        <input type="file" class="form-control" id="file" name="file" accept=".jpg,.jpeg">
                                         <button type="submit" class="btn btn-primary">
                                             <i class="fas fa-file-pdf me-2"></i>{{ texts.convert_btn }}
                                         </button>
@@ -103,6 +116,7 @@
                 </div>
 
                 <div class="col-md-5">
+                    <!-- Download Card (only shown when PDF is generated) -->
                     {% if pdf_path %}
                     <div class="card mb-4">
                         <div class="card-header">
@@ -117,8 +131,8 @@
                             </a>
                         </div>
                     </div>
-
-                    <!-- Post-conversion Ad -->
+                    
+                    <!-- Post-conversion ad -->
                     <div class="ad-container mb-4">
                         <div class="ad-placeholder">
                             <p>Post-conversion Ad</p>
@@ -128,28 +142,44 @@
                 </div>
             </div>
 
+            <!-- Process Visualization -->
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-info-circle me-2"></i>{{ 'Comment ça marche' if session.get('lang') == 'fr' else 'How it works' }}
                 </div>
                 <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-md-4">
-                            <i class="fas fa-upload fa-2x mb-2"></i>
-                            <p>{{ 'Téléchargez une image JPEG' if session.get('lang') == 'fr' else 'Upload a JPEG image' }}</p>
-                        </div>
-                        <div class="col-md-4">
-                            <i class="fas fa-image fa-2x mb-2"></i>
-                            <p>{{ 'Ajout d\'une bannière jaune' if session.get('lang') == 'fr' else 'Yellow banner is added' }}</p>
-                        </div>
-                        <div class="col-md-4">
-                            <i class="fas fa-file-pdf fa-2x mb-2"></i>
-                            <p>{{ 'Téléchargez le PDF résultant' if session.get('lang') == 'fr' else 'Download the resulting PDF' }}</p>
+                    <div class="process-steps">
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <div class="process-step">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-upload"></i>
+                                    </div>
+                                    <p>{{ 'Téléchargez une image JPEG' if session.get('lang') == 'fr' else 'Upload a JPEG image' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="process-step">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-image"></i>
+                                    </div>
+                                    <p>{{ 'Ajout d\'une bannière jaune' if session.get('lang') == 'fr' else 'Yellow banner is added' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="process-step">
+                                    <div class="icon-circle">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <p>{{ 'Téléchargez le PDF résultant' if session.get('lang') == 'fr' else 'Download the resulting PDF' }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Ad Space at the bottom -->
             <div class="ad-container">
                 <div class="ad-placeholder">
                     <p>{{ texts.ad_space }}</p>
@@ -159,24 +189,28 @@
 
         <footer class="mt-4">
             <hr>
-            <p class="text-center text-muted">© 2025 {{ texts.title }}</p>
+            <p class="text-center text-muted">
+                © 2023 {{ texts.title }}
+            </p>
         </footer>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
-    <!-- Service Worker for Monetag -->
+    <!-- MonetTag -->
+    <script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://publishers.monetag.com/tag.min.js',9198076,document.body||document.documentElement)</script>
+    <!-- Monetag Service Worker -->
     <script>
-      if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/sw.js')
-              .then(function(registration) {
-                  console.log('Service worker registration succeeded:', registration);
-              }).catch(function(error) {
-                  console.log('Service worker registration failed:', error);
-              });
-      }
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service worker registration succeeded:', registration);
+                }).catch(function(error) {
+                    console.log('Service worker registration failed:', error);
+                });
+        }
     </script>
 </body>
 </html>
