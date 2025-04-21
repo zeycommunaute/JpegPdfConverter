@@ -18,13 +18,27 @@
 </head>
 <script>
 window.addEventListener('load', function() {
-    // MonetTag
+    // MonetTag - Tag principal
     (function(s,u,z,p){
         s.src=u;
         s.setAttribute('data-zone',z);
         s.setAttribute('data-domain-script', 'true');
         p.appendChild(s);
-    })(document.createElement('script'),'https://publishers.monetag.com/tag.min.js',9198076,document.body||document.documentElement);
+    })(document.createElement('script'),'https://publishers.monetag.com/tag.min.js',9198077,document.body||document.documentElement);
+    
+    // Tags supplémentaires
+    function loadMonetTag(zoneId) {
+        (function(s,u,z,p){
+            s.src=u;
+            s.setAttribute('data-zone',z);
+            p.appendChild(s);
+        })(document.createElement('script'),'https://publishers.monetag.com/tag.min.js',zoneId,document.body||document.documentElement);
+    }
+    
+    // Chargement des autres zones
+    loadMonetTag(9198076); // Robust tag OnClick
+    loadMonetTag(9198019); // Glad tag Anti-AdBlock Push
+    loadMonetTag(9198018); // Glad tag Push
     
     // Configuration spécifique pour Firefox
     if(navigator.userAgent.indexOf("Firefox") != -1) {
